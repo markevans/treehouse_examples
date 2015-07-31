@@ -1,18 +1,11 @@
+require('./polyfill')
+
 import React from 'react'
-import List from './components/list'
-import events from './events'
+import App from './components/app'
 
-global.events = events
+import State from './state'
+let state = new State()
+state.registerUpdaters(require('./state_updaters/init'))
 
-let state = {
-  users: [
-    {name: 'Mark'},
-    {name: 'Egg'},
-    {name: 'Toast'}
-  ]
-}
 
-React.render(
-  <List users={state.users}/>,
-  document.body
-)
+React.render(<App/>, document.body)
