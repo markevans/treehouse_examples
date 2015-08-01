@@ -7,29 +7,33 @@ global.c = c
 // "edgar.users" -> ['edgar', 'users']
 let normalizePath = (path) => {
   let pathArray = []
-  if (typeof path === 'string') {
-    pathArray = pathArray.concat(string.split('.'))
-  } else { // array
-    pathArray = pathArray.concat(path.map((p) => {
-      return normalizePath(p)
-    }))
+  if (path.forEach) { // array
+    path.forEach((p) => {
+      pathArray = pathArray.concat(normalizePath(p))
+    })
+  } else { // string/number
+    pathArray = pathArray.concat((''+path).split('.'))
   }
   return pathArray
 }
 
 class Cursor {
-  constructor (path, getData, setData) {
+  constructor (path=[], getData, setData) {
     this.path = normalizePath(path)
     this.getData = getData
     this.setData = setData
   }
 
-  get (path) {
+  at (...path) {
     return new this.constructor(
-      path,
-      () => { return this.data },
-      (data) => { this.data = data }
+      this.path.concat(path),
+      this.getData,
+      this.setData
     )
+  }
+
+  get () {
+    return this.getData().getIn(this.path)
   }
 
   update (...args) {
@@ -45,13 +49,11 @@ class Cursor {
     let newValue,
       data = this.getData()
     if (typeof value === 'function') {
-      let currentValue = data.getIn(pathToAttr)
-      newValue = value(currentValue)
+      this.setData(data.updateIn(pathToAttr, value))
     } else {
-      newValue = value
+      this.setData(data.updateIn(pathToAttr, () => value))
     }
 
-    this.setData(data.updateIn(pathToAttr, newValue))
   }
 }
 global.Cursor = Cursor
@@ -63,7 +65,7 @@ class State {
     this.updaters = {}
   }
 
-  get (path) {
+  at (...path) {
     return new Cursor(
       path,
       () => { return this.data },
@@ -79,28 +81,15 @@ class State {
     Object.assign(this.updaters, updaters)
   }
 
-}
-
-
-global.stuff = new State({
-  categories: [
-    {
-      name: 'animal',
-      species: [
-        {
-          name: 'Mammal',
-          animals: [
-            {name: 'Lion'}
-          ]
-        }
-      ]
-    },
-    {
-      name: 'mineral'
+  apply (name, ...args) {
+    let updater = this.updaters[name]
+    if (updater) {
+      updater(this.at(), ...args)
+    } else {
+      console.log(`No updater found with name '${name}'`)
     }
-  ]
-})
+  }
 
-
+}
 
 export default State
