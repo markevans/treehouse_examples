@@ -1,7 +1,7 @@
 export default {
 
   init (state) {
-    state.set({
+    state.update({
       users: [
         {name: 'Mark'},
         {name: 'Egg'},
