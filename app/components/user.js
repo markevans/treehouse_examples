@@ -1,6 +1,6 @@
-import React from "react"
+import component from "./component"
 
-export default React.createClass({
+export default component({
   render () {
     return <li>
       {this.props.user.name}

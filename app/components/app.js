@@ -1,7 +1,7 @@
-import React from "react"
+import component from "./component"
 import List from './list'
 
-export default React.createClass({
+export default component({
   render () {
     return <List users={[]}/>
   }

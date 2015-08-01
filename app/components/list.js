@@ -1,7 +1,7 @@
-import React from "react"
+import component from "./component"
 import User from "./user"
 
-export default React.createClass({
+export default component({
   render () {
     return (
       <ul>
