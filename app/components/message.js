@@ -5,9 +5,7 @@ export default component({
 
   render () {
     return (
-      <p>
-        {this.appState('message')}
-      </p>
+      <p>{this.appState('message').get()}</p>
     )
   }
 })

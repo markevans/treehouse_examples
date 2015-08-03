@@ -8,7 +8,7 @@ export default component({
 
   handleSubmit (e) {
     e.preventDefault()
-    this.action('changeName', {user: this.props.user, name: this.state.name})
+    this.action('changeName', {user: this.props.user, name: this.state.nameValue})
     this.setState({nameValue: ''})
   },
 
