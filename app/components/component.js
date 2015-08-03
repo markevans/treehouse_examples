@@ -1,13 +1,23 @@
 require('../polyfill')
 import React from 'react'
 
-export default (spec) => {
+let state, actions
+
+let component = (spec) => {
   return React.createClass(Object.assign({
 
-    appState () {
-      return 3
+    appState (...path) {
+      return state.at(...path)
+    },
+
+    action (name, payload) {
+      actions.call(name, payload)
     }
 
   }, spec))
 }
 
+component.setAppState = (s) => { state = s }
+component.setActions = (a) => { actions = a }
+
+export default component

@@ -32,8 +32,14 @@ class Cursor {
     )
   }
 
-  get () {
-    return this.getData().getIn(this.path)
+  get (...path) {
+    return this.getData().getIn(normalizePath(this.path.concat(path)))
+  }
+
+  map (callback) {
+    return this.get().map( (item, i) => {
+      return callback(this.at(i), i)
+    })
   }
 
   update (...args) {
@@ -73,6 +79,10 @@ class State {
     )
   }
 
+  get (...path) {
+    return this.data.getIn(normalizePath(path))
+  }
+
   p () {
     console.log(JSON.stringify(this.data))
   }
@@ -81,10 +91,10 @@ class State {
     Object.assign(this.updaters, updaters)
   }
 
-  apply (name, ...args) {
+  apply (name, args) {
     let updater = this.updaters[name]
     if (updater) {
-      updater(this.at(), ...args)
+      updater(this.at(), args)
     } else {
       console.log(`No updater found with name '${name}'`)
     }

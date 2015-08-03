@@ -1,8 +1,14 @@
 import component from "./component"
 import List from './list'
+import Message from './message'
 
 export default component({
   render () {
-    return <List users={[]}/>
+    return (
+      <div>
+        <Message/>
+        <List/>
+      </div>
+    )
   }
 })

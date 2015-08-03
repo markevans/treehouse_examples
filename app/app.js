@@ -1,14 +1,24 @@
 require('./polyfill')
 
 import React from 'react'
-import App from './components/app'
+global.React = React
 
+import App from './components/app'
 import State from './state'
+import Actions from './actions'
+import component from './components/component'
+
 let state = new State()
 state.registerUpdaters(require('./state_updaters/init'))
-
+state.registerUpdaters(require('./state_updaters/users'))
+component.setAppState(state)
 global.state = state
-global.React = React
+
+let actions = new Actions()
+actions.setState(state)
+actions.registerActions(require('./actions/users'))
+component.setActions(actions)
+global.actions = actions
 
 state.apply('init')
 React.render(<App/>, document.body)
