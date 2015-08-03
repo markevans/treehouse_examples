@@ -7,7 +7,7 @@ export default component({
   render () {
     return (
       <ul>
-        {this.appState('users').map((user, i)=>{
+        {this.appState.users.map( (user, i) => {
           return <User user={user} key={i} />
         })}
       </ul>
