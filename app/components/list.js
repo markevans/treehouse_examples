@@ -2,6 +2,8 @@ import component from "./component"
 import User from "./user"
 
 export default component({
+  componentName: 'List',
+
   requireFromState: ['users'],
 
   render () {

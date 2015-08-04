@@ -34,18 +34,31 @@ let component = (spec) => {
       }, {})
     },
 
+    nextAppStateCursors () {
+      return this.requireFromState.reduce((obj, dep) => {
+        obj[dep] = state.at(dep)
+        return obj
+      }, {})
+    },
+
+    updateAppState () {
+      this.currentAppState = this.nextAppState()
+      this.appState = this.nextAppStateCursors()
+    },
+
     componentWillMount () {
-      this.appState = this.nextAppState()
+      this.updateAppState()
     },
 
     componentWillUpdate () {
-      this.appState = this.nextAppState()
+      this.updateAppState()
+      console.log('componentWillUpdate', this.componentName)
     },
 
     shouldComponentUpdate (nextProps, nextState) {
       return !elementsAreEqual(this.state, nextState) ||
         !elementsAreEqual(this.props, nextProps) ||
-        !elementsAreEqual(this.appState, this.nextAppState())
+        !elementsAreEqual(this.currentAppState, this.nextAppState())
     },
 
     action (name, payload) {

@@ -16,6 +16,8 @@ export default component({
     this.setState({nameValue: e.target.value})
   },
 
+  componentName: 'User',
+
   render () {
     return <li>
       {this.props.user.get('name')}
