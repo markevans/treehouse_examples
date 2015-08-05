@@ -5,9 +5,13 @@ export default component({
 
   requireFromState: ['message'],
 
+  onChange (e) {
+    this.action('changeMessage', {text: e.target.value})
+  },
+
   render () {
     return (
-      <p>{this.appState.message.get()}</p>
+      <form><input name="message" value={this.appState.message.get()} onChange={this.onChange} /></form>
     )
   }
 })

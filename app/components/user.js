@@ -2,6 +2,8 @@ import component from "./component"
 
 export default component({
 
+  requireFromState: ['message'],
+
   getInitialState () {
     return {nameValue: ''}
   },
@@ -23,6 +25,7 @@ export default component({
       {this.props.user.get('name')}
       <form onSubmit={ this.handleSubmit }>
         <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange}/>
+        Message: {this.appState.message.get()}
       </form>
     </li>
   }

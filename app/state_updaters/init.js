@@ -4,7 +4,7 @@ export default {
 
   init (state) {
     state.update(i.fromJS({
-      message: "I don't have a message yet",
+      message: "Change me",
       users: [
         {name: 'Mark'},
         {name: 'Egg'},

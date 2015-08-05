@@ -43,7 +43,7 @@ class State {
       updater(this.at(), args)
       this.eventEmitter.emit('commit', {name, args})
     } else {
-      console.log(`No updater found with name '${name}'`)
+      console.log(`State updater '${name}' not found`)
     }
   }
 
