@@ -38,6 +38,14 @@ class Cursor {
     })
   }
 
+  equals (other) {
+    if (other.equals) {
+      return other.equals(this.get())
+    } else {
+      return false
+    }
+  }
+
   update (...args) {
     let pathToAttr, value
     if (args.length == 2) { // update(attr, value)

@@ -22,7 +22,7 @@ export default component({
     return <li>
       {this.props.user.get('name')}
       <form onSubmit={ this.handleSubmit }>
-        <input name="name" value={this.state.nameValue} onChange={this.handleChange}/>
+        <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange}/>
       </form>
     </li>
   }
