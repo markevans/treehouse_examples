@@ -22,9 +22,13 @@ component.setActions(actions)
 global.actions = actions
 
 let dirtyTracker = new DirtyTracker()
-state.onCommit(({name, args}) =>
-  console.log("COMMIT", name, args)
-)
+component.setDirtyTracker(dirtyTracker)
+state.onCommit(({name, args}) => {
+  dirtyTracker.forEach( (component) => {
+    component.forceUpdate()
+  })
+})
+global.dirtyTracker = dirtyTracker
 
 state.commit('init')
 React.render(<App/>, document.body)

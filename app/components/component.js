@@ -1,7 +1,7 @@
 require('../polyfill')
 import React from 'react'
 
-let state, actions
+let state, actions, dirtyTracker
 
 let areEqual = (var1, var2) => {
   if ( var1.equals ) {
@@ -56,18 +56,23 @@ let component = (spec) => {
 
     componentWillUpdate () {
       this.currentAppStateData = this.appStateData()
-      //console.log('componentWillUpdate', this.componentName)
+      console.log('Updating', this.componentName, this._reactInternalInstance._rootNodeID)
+    },
+
+    componentDidUpdate () {
+      dirtyTracker.remove(this)
     },
 
     componentWillUnmount () {
       this.unsubscribeToState()
+      dirtyTracker.remove(this)
     },
 
     subscribeToState () {
       this.subscriptions = []
       this.requireFromState.forEach((path) => {
         state.onUpdate(path, () => {
-          console.log("TODO: make dirty", path, this.componentName)
+          dirtyTracker.add(this)
         })
       })
     },
@@ -87,5 +92,6 @@ let component = (spec) => {
 
 component.setAppState = (s) => { state = s }
 component.setActions = (a) => { actions = a }
+component.setDirtyTracker = (d) => { dirtyTracker = d }
 
 export default component
