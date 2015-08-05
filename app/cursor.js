@@ -51,9 +51,9 @@ class Cursor {
     let newValue,
       data = this.getData()
     if (typeof value === 'function') {
-      this.setData(data.updateIn(pathToAttr, value))
+      this.setData(data.updateIn(pathToAttr, value), pathToAttr)
     } else {
-      this.setData(data.updateIn(pathToAttr, () => value))
+      this.setData(data.updateIn(pathToAttr, () => value), pathToAttr)
     }
 
   }

@@ -1,20 +1,28 @@
 import i from 'immutable'
 import Cursor from './cursor'
-global.i = i
+import EventEmitter from './event_emitter'
+global.I = i
+global.E = EventEmitter
 
 class State {
 
   constructor (data = {}) {
     this.data = i.fromJS(data)
     this.updaters = {}
+    this.eventEmitter = new EventEmitter()
+  }
+
+  getData () {
+    return this.data
+  }
+
+  setData (data, changePath) {
+    this.data = data
+    this.emitChangesToPath(changePath)
   }
 
   at (...path) {
-    return new Cursor(
-      path,
-      () => { return this.data },
-      (data) => { this.data = data }
-    )
+    return new Cursor(path, this.getData.bind(this), this.setData.bind(this))
   }
 
   get (...path) {
@@ -29,12 +37,29 @@ class State {
     Object.assign(this.updaters, updaters)
   }
 
-  apply (name, args) {
+  commit (name, args) {
     let updater = this.updaters[name]
     if (updater) {
       updater(this.at(), args)
+      this.eventEmitter.emit('commit', {name, args})
     } else {
       console.log(`No updater found with name '${name}'`)
+    }
+  }
+
+  onCommit (callback) {
+    return this.eventEmitter.on('commit', callback)
+  }
+
+  onUpdate (pathString, callback) {
+    return this.eventEmitter.on(`update:${pathString}`, callback)
+  }
+
+  emitChangesToPath (p) {
+    let path = p.slice(), i
+    for (i = 1; i <= p.length; i++) {
+      this.eventEmitter.emit(`update:${path.join('.')}`)
+      path.pop()
     }
   }
 

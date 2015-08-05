@@ -27,39 +27,56 @@ let component = (spec) => {
 
     requireFromState: [],
 
-    nextAppState () {
-      return this.requireFromState.reduce((obj, dep) => {
-        obj[dep] = state.get(dep)
-        return obj
-      }, {})
-    },
-
-    nextAppStateCursors () {
+    appStateCursors () {
       return this.requireFromState.reduce((obj, dep) => {
         obj[dep] = state.at(dep)
         return obj
       }, {})
     },
 
-    updateAppState () {
-      this.currentAppState = this.nextAppState()
-      this.appState = this.nextAppStateCursors()
+    appStateData () {
+      let key, data = {}
+      for (key in this.appState) {
+        data[key] = this.appState[key].get()
+      }
+      return data
     },
 
     componentWillMount () {
-      this.updateAppState()
-    },
-
-    componentWillUpdate () {
-      this.updateAppState()
-      console.log('componentWillUpdate', this.componentName)
+      this.appState = this.appStateCursors()
+      this.currentAppStateData = this.appStateData()
+      this.subscribeToState()
     },
 
     shouldComponentUpdate (nextProps, nextState) {
       return !elementsAreEqual(this.state, nextState) ||
         !elementsAreEqual(this.props, nextProps) ||
-        !elementsAreEqual(this.currentAppState, this.nextAppState())
+        !elementsAreEqual(this.currentAppStateData, this.appStateData())
     },
+
+    componentWillUpdate () {
+      this.currentAppStateData = this.appStateData()
+      //console.log('componentWillUpdate', this.componentName)
+    },
+
+    componentWillUnmount () {
+      this.unsubscribeToState()
+    },
+
+    subscribeToState () {
+      this.subscriptions = []
+      this.requireFromState.forEach((path) => {
+        state.onUpdate(path, () => {
+          console.log("TODO: make dirty", path, this.componentName)
+        })
+      })
+    },
+
+    unsubscribeToState () {
+      this.subscriptions.forEach(s => s.unsubscribe())
+    },
+
+    //--------------------------------------------------
 
     action (name, payload) {
       actions.call(name, payload)

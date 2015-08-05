@@ -27,6 +27,7 @@ class EventEmitter {
   }
 
   emit (eventName, payload) {
+    console.log("emit", eventName, payload)
     this.channel(eventName).forEach((callback) =>
       callback(payload)
     )
