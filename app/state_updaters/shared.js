@@ -11,6 +11,14 @@ export default {
         {name: 'Toast'}
       ]
     }))
+  },
+
+  changeName (state, {user, name}) {
+    user.update('name', name)
+  },
+
+  changeMessage (state, {text}) {
+    state.update('message', text)
   }
 
 }

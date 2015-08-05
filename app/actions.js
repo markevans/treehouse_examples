@@ -15,10 +15,7 @@ class Actions {
 
   call (name, payload={}) {
     if ( this.actions[name] ) {
-      let updateState = (name, args) => {
-        this.state.commit(name, args)
-      }
-      this.actions[name](updateState, payload)
+      this.actions[name](this.state, payload)
     } else {
       console.log(`Action '${name}' not found`)
     }

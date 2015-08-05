@@ -37,18 +37,18 @@ class State {
     Object.assign(this.updaters, updaters)
   }
 
-  commit (name, args) {
+  apply (name, args) {
     let updater = this.updaters[name]
     if (updater) {
       updater(this.at(), args)
-      this.eventEmitter.emit('commit', {name, args})
+      this.eventEmitter.emit('apply', {name, args})
     } else {
       console.log(`State updater '${name}' not found`)
     }
   }
 
-  onCommit (callback) {
-    return this.eventEmitter.on('commit', callback)
+  onApply (callback) {
+    return this.eventEmitter.on('apply', callback)
   }
 
   onUpdate (pathString, callback) {
