@@ -46,12 +46,12 @@ class Cursor {
     }
   }
 
-  update (...args) {
+  set (...args) {
     let pathToAttr, value
-    if (args.length == 2) { // update(attr, value)
+    if (args.length == 2) { // set(attr, value)
       pathToAttr = this.path.concat([args[0]])
       value = args[1]
-    } else { // update(value)
+    } else { // set(value)
       pathToAttr = this.path
       value = args[0]
     }

@@ -3,7 +3,7 @@ import i from 'immutable'
 export default {
 
   init (state) {
-    state.update(i.fromJS({
+    state.set(i.fromJS({
       message: "Change me",
       users: [
         {name: 'Mark'},
@@ -14,11 +14,11 @@ export default {
   },
 
   changeName (state, {user, name}) {
-    user.update('name', name)
+    user.set('name', name)
   },
 
   changeMessage (state, {text}) {
-    state.update('message', text)
+    state.set('message', text)
   }
 
 }
