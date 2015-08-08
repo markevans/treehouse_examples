@@ -3,7 +3,7 @@ import component from "./component"
 export default component({
   componentName: 'Message',
 
-  requireFromState: ['message'],
+  stateCursors: {message: 'message'},
 
   onChange (e) {
     this.action('changeMessage', {text: e.target.value})
@@ -11,7 +11,7 @@ export default component({
 
   render () {
     return (
-      <form><input name="message" value={this.appState.message.get()} onChange={this.onChange} /></form>
+      <form><input name="message" value={this.cursors.message.get()} onChange={this.onChange} /></form>
     )
   }
 })

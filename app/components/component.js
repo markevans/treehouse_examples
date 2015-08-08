@@ -25,25 +25,27 @@ let elementsAreEqual = (obj1, obj2) => {
 let component = (spec) => {
   return React.createClass(Object.assign({
 
-    requireFromState: [],
+    stateCursors: {},
 
     appStateCursors () {
-      return this.requireFromState.reduce((obj, dep) => {
-        obj[dep] = state.at(dep)
-        return obj
-      }, {})
+      var key, path, cursors = {}
+      for ( key in this.stateCursors ) {
+        path = this.stateCursors[key]
+        cursors[key] = state.at(path)
+      }
+      return cursors
     },
 
     appStateData () {
       let key, data = {}
-      for (key in this.appState) {
-        data[key] = this.appState[key].get()
+      for (key in this.cursors) {
+        data[key] = this.cursors[key].get()
       }
       return data
     },
 
     componentWillMount () {
-      this.appState = this.appStateCursors()
+      this.cursors = this.appStateCursors()
       this.currentAppStateData = this.appStateData()
       this.subscribeToState()
     },
@@ -70,11 +72,13 @@ let component = (spec) => {
 
     subscribeToState () {
       this.subscriptions = []
-      this.requireFromState.forEach((path) => {
+      var key, path
+      for ( key in this.stateCursors ) {
+        path = this.stateCursors[key]
         state.onUpdate(path, () => {
           dirtyTracker.add(this)
         })
-      })
+      }
     },
 
     unsubscribeToState () {

@@ -4,12 +4,12 @@ import User from "./user"
 export default component({
   componentName: 'List',
 
-  requireFromState: ['users'],
+  stateCursors: {users: 'users'},
 
   render () {
     return (
       <ul>
-        {this.appState.users.map( (user, i) => {
+        {this.cursors.users.map( (user, i) => {
           return <User user={user} key={i} />
         })}
       </ul>
