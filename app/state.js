@@ -51,14 +51,14 @@ class State {
     return this.eventEmitter.on('apply', callback)
   }
 
-  onUpdate (pathString, callback) {
-    return this.eventEmitter.on(`update:${pathString}`, callback)
+  onChange (pathString, callback) {
+    return this.eventEmitter.on(`change:${pathString}`, callback)
   }
 
   emitChangesToPath (p) {
     let path = p.slice(), i
     for (i = 1; i <= p.length; i++) {
-      this.eventEmitter.emit(`update:${path.join('.')}`)
+      this.eventEmitter.emit(`change:${path.join('.')}`)
       path.pop()
     }
   }

@@ -75,7 +75,7 @@ let component = (spec) => {
       var key, path
       for ( key in this.stateCursors ) {
         path = this.stateCursors[key]
-        state.onUpdate(path, () => {
+        state.onChange(path, () => {
           dirtyTracker.add(this)
         })
       }
