@@ -8,7 +8,6 @@ class State {
 
   constructor (data = {}) {
     this.data = i.fromJS(data)
-    this.updaters = {}
     this.eventEmitter = new EventEmitter()
   }
 
@@ -33,22 +32,12 @@ class State {
     console.log(JSON.stringify(this.data))
   }
 
-  registerUpdaters (updaters) {
-    Object.assign(this.updaters, updaters)
+  commit () {
+    this.eventEmitter.emit('commit')
   }
 
-  apply (name, args) {
-    let updater = this.updaters[name]
-    if (updater) {
-      updater(this.at(), args)
-      this.eventEmitter.emit('apply', {name, args})
-    } else {
-      console.log(`State updater '${name}' not found`)
-    }
-  }
-
-  onApply (callback) {
-    return this.eventEmitter.on('apply', callback)
+  onCommit (callback) {
+    return this.eventEmitter.on('commit', callback)
   }
 
   onChange (pathString, callback) {

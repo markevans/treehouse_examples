@@ -10,7 +10,6 @@ import DirtyTracker from './dirty_tracker'
 import component from './components/component'
 
 let state = new State()
-state.registerUpdaters(require('./state_updaters/shared'))
 component.setAppState(state)
 global.state = state
 
@@ -22,12 +21,12 @@ global.actions = actions
 
 let dirtyTracker = new DirtyTracker()
 component.setDirtyTracker(dirtyTracker)
-state.onApply(({name, args}) => {
+state.onCommit(() => {
   dirtyTracker.forEach( (component) => {
     component.forceUpdate()
   })
 })
 global.dirtyTracker = dirtyTracker
 
-state.apply('init')
+actions.call('init')
 React.render(<App/>, document.body)

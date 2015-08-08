@@ -15,7 +15,7 @@ class Actions {
 
   call (name, payload={}) {
     if ( this.actions[name] ) {
-      this.actions[name](this.state, payload)
+      this.actions[name](this.state.at(), payload, this.state.commit.bind(this.state))
     } else {
       console.log(`Action '${name}' not found`)
     }
