@@ -9,7 +9,12 @@ export default {
         {name: 'Mark'},
         {name: 'Egg'},
         {name: 'Toast'}
-      ]
+      ],
+      preferences: {
+        network: {
+          timestamp: Date()
+        }
+      }
     }))
     commit()
   },

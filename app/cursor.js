@@ -14,17 +14,17 @@ let normalizePath = (path) => {
 }
 
 class Cursor {
-  constructor (path=[], getData, setData) {
+  constructor (tree, path=[]) {
+    this.tree = tree
     this.path = normalizePath(path)
-    this.getData = getData
-    this.setData = setData
+    this.getData = tree.getData.bind(tree)
+    this.setData = tree.setData.bind(tree)
   }
 
   at (...path) {
     return new this.constructor(
-      this.path.concat(path),
-      this.getData,
-      this.setData
+      this.tree,
+      this.path.concat(path)
     )
   }
 
@@ -64,6 +64,15 @@ class Cursor {
       this.setData(data.updateIn(pathToAttr, () => value), pathToAttr)
     }
 
+  }
+
+  commit () {
+    this.tree.commit()
+  }
+
+  setAndCommit (...args) {
+    this.set(...args)
+    this.commit()
   }
 }
 

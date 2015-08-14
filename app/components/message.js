@@ -11,7 +11,10 @@ export default component({
 
   render () {
     return (
-      <form><input name="message" value={this.cursors.message.get()} onChange={this.onChange} /></form>
+      <p>
+        <form><input autoComplete="off" name="message" value={this.cursors.message.get()} onChange={this.onChange} /></form>
+        {this.cursors.message.get()}
+      </p>
     )
   }
 })

@@ -2,8 +2,6 @@ import component from "./component"
 
 export default component({
 
-  stateCursors: {message: 'message'},
-
   getInitialState () {
     return {nameValue: ''}
   },
@@ -25,7 +23,6 @@ export default component({
       {this.props.user.get('name')}
       <form onSubmit={ this.handleSubmit }>
         <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange}/>
-        Message: {this.cursors.message.get()}
       </form>
     </li>
   }

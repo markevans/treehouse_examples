@@ -21,7 +21,7 @@ class State {
   }
 
   at (...path) {
-    return new Cursor(path, this.getData.bind(this), this.setData.bind(this))
+    return new Cursor(this, path)
   }
 
   get (...path) {
