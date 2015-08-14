@@ -17,7 +17,7 @@ class State {
 
   setData (data, changePath) {
     this.data = data
-    this.emitChangesToPath(changePath)
+    this.eventEmitter.emit('change', {path: changePath})
   }
 
   at (...path) {
@@ -40,16 +40,8 @@ class State {
     return this.eventEmitter.on('commit', callback)
   }
 
-  onChange (pathString, callback) {
-    return this.eventEmitter.on(`change:${pathString}`, callback)
-  }
-
-  emitChangesToPath (p) {
-    let path = p.slice(), i
-    for (i = 1; i <= p.length; i++) {
-      this.eventEmitter.emit(`change:${path.join('.')}`)
-      path.pop()
-    }
+  onChange (callback) {
+    return this.eventEmitter.on('change', callback)
   }
 
 }

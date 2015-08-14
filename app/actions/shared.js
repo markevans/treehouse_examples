@@ -3,7 +3,7 @@ import i from 'immutable'
 export default {
 
   init (state, payload, commit) {
-    state.set(i.fromJS({
+    state.setAndCommit(i.fromJS({
       message: "Change me",
       users: [
         {name: 'Mark'},
@@ -16,17 +16,14 @@ export default {
         }
       }
     }))
-    commit()
   },
 
   changeMessage (state, {text}, commit) {
-    state.set('message', text)
-    commit()
+    state.setAndCommit('message', text)
   },
 
   changeName (state, {user, name}, commit) {
-    user.set('name', name)
-    commit()
+    user.setAndCommit('name', name)
   },
 
 }

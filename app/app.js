@@ -21,10 +21,13 @@ global.actions = actions
 
 let dirtyTracker = new DirtyTracker()
 component.setDirtyTracker(dirtyTracker)
+state.onChange(({path}) => {
+  dirtyTracker.markBranchDirty(path[0])
+})
 state.onCommit(() => {
-  dirtyTracker.forEach( (component) => {
-    component.forceUpdate()
-  })
+  let nada = {}
+  dirtyTracker.eachDirtyComponent( c => c.setState(nada) )
+  dirtyTracker.clear()
 })
 global.dirtyTracker = dirtyTracker
 

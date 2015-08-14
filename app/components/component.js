@@ -22,6 +22,14 @@ let elementsAreEqual = (obj1, obj2) => {
   return true
 }
 
+// "a.b.c" -> "a" or ["a", "b", "c" ] -> "a"
+let branchFromPath = (path) => {
+  if (typeof path === 'string') {
+    path = path.split('.')
+  }
+  return path[0]
+}
+
 let component = (spec) => {
   return React.createClass(Object.assign({
 
@@ -44,13 +52,24 @@ let component = (spec) => {
       return data
     },
 
+    appStateBranches () {
+      let key, branches = []
+      for (key in this.stateCursors) {
+        var branch = branchFromPath(this.stateCursors[key])
+        branches.push(branch)
+      }
+      return branches
+    },
+
     componentWillMount () {
       this.cursors = this.appStateCursors()
       this.currentAppStateData = this.appStateData()
-      this.subscribeToState()
+      this.relevantAppStateBranches = this.appStateBranches()
+      dirtyTracker.register(this, this.relevantAppStateBranches)
     },
 
     shouldComponentUpdate (nextProps, nextState) {
+      console.log('shouldComponentUpdate', this.componentName, this._reactInternalInstance._rootNodeID)
       return !elementsAreEqual(this.state, nextState) ||
         !elementsAreEqual(this.props, nextProps) ||
         !elementsAreEqual(this.currentAppStateData, this.appStateData())
@@ -58,31 +77,15 @@ let component = (spec) => {
 
     componentWillUpdate () {
       this.currentAppStateData = this.appStateData()
-      console.log('Updating', this.componentName, this._reactInternalInstance._rootNodeID)
+      console.log('render', this.componentName, this._reactInternalInstance._rootNodeID)
     },
 
     componentDidUpdate () {
-      dirtyTracker.remove(this)
+      dirtyTracker.markComponentClean(this)
     },
 
     componentWillUnmount () {
-      this.unsubscribeToState()
-      dirtyTracker.remove(this)
-    },
-
-    subscribeToState () {
-      this.subscriptions = []
-      var key, path
-      for ( key in this.stateCursors ) {
-        path = this.stateCursors[key]
-        state.onChange(path, () => {
-          dirtyTracker.add(this)
-        })
-      }
-    },
-
-    unsubscribeToState () {
-      this.subscriptions.forEach(s => s.unsubscribe())
+      dirtyTracker.unregister(this, this.relevantAppStateBranches)
     },
 
     //--------------------------------------------------
