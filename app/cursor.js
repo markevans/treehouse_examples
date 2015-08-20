@@ -56,10 +56,13 @@ class Cursor {
 
     let value
     if (typeof valueArg === 'function') {
-      let currentValue = this.tree.getData(pathToAttr)
+      let currentValue = this.tree.getData().getIn(pathToAttr)
       value = valueArg(currentValue)
     } else {
       value = valueArg
+    }
+    if (value === undefined) {
+      throw new Error("You can't call 'set' with value undefined")
     }
     value = i.fromJS(value) // ensure it's immutable
     this.tree.setData(this.tree.getData().updateIn(pathToAttr, () => value), pathToAttr)
