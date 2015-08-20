@@ -1,9 +1,7 @@
-import i from 'immutable'
-
 export default {
 
   init (state, payload, commit) {
-    state.setAndCommit(i.fromJS({
+    state.setAndCommit({
       message: "Change me",
       users: [
         {name: 'Mark'},
@@ -15,7 +13,7 @@ export default {
           timestamp: Date()
         }
       }
-    }))
+    })
   },
 
   changeMessage (state, {text}, commit) {

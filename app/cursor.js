@@ -17,8 +17,6 @@ class Cursor {
   constructor (tree, path=[]) {
     this.tree = tree
     this.path = normalizePath(path)
-    this.getData = tree.getData.bind(tree)
-    this.setData = tree.setData.bind(tree)
   }
 
   at (...path) {
@@ -29,7 +27,7 @@ class Cursor {
   }
 
   get (...path) {
-    return this.getData().getIn(normalizePath(this.path.concat(path)))
+    return this.tree.getData().getIn(normalizePath(this.path.concat(path)))
   }
 
   map (callback) {
@@ -47,22 +45,24 @@ class Cursor {
   }
 
   set (...args) {
-    let pathToAttr, value
+    let pathToAttr, valueArg
     if (args.length == 2) { // set(attr, value)
       pathToAttr = this.path.concat(normalizePath(args[0]))
-      value = args[1]
+      valueArg = args[1]
     } else { // set(value)
       pathToAttr = this.path
-      value = args[0]
+      valueArg = args[0]
     }
 
-    let newValue,
-      data = this.getData()
-    if (typeof value === 'function') {
-      this.setData(data.updateIn(pathToAttr, value), pathToAttr)
+    let value
+    if (typeof valueArg === 'function') {
+      let currentValue = this.tree.getData(pathToAttr)
+      value = valueArg(currentValue)
     } else {
-      this.setData(data.updateIn(pathToAttr, () => value), pathToAttr)
+      value = valueArg
     }
+    value = i.fromJS(value) // ensure it's immutable
+    this.tree.setData(this.tree.getData().updateIn(pathToAttr, () => value), pathToAttr)
 
   }
 
