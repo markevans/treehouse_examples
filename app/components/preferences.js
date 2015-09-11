@@ -1,18 +1,14 @@
-import component from "./component"
+export default class Preferences extends treehouse.Component {
 
-export default component({
-
-  stateCursors: {
-    preferences: 'preferences'
-  },
-
-  componentName: 'Preferences',
+  stateFromTree () {
+    return {preferences: 'preferences'}
+  }
 
   render () {
     return <div>
-      Preferences 
-      {this.cursors.preferences.get('network.timestamp').match(/\d\d:\d\d:\d\d/)[0]}
+      Preferences
+      {this.state.preferences.get('network').get('timestamp').match(/\d\d:\d\d:\d\d/)[0]}
     </div>
   }
 
-})
+}

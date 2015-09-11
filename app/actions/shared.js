@@ -1,7 +1,7 @@
 export default {
 
-  init (state, payload, commit) {
-    state.setAndCommit({
+  init (state, payload) {
+    state.set({
       message: "Change me",
       users: [
         {name: 'Mark'},
@@ -13,15 +13,15 @@ export default {
           timestamp: Date()
         }
       }
-    })
+    }).commit()
   },
 
-  changeMessage (state, {text}, commit) {
-    state.setAndCommit('message', text)
+  changeMessage (state, {text}) {
+    state.set('message', text).commit()
   },
 
-  changeName (state, {user, name}, commit) {
-    user.setAndCommit('name', name)
-  },
+  changeName (state, {userID, name}) {
+    state.at('users', userID).set('name', name).commit()
+  }
 
 }

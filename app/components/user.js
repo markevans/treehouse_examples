@@ -1,30 +1,34 @@
-import component from "./component"
-
-export default component({
+export default class User extends treehouse.Component {
 
   getInitialState () {
     return {nameValue: ''}
-  },
+  }
 
   handleSubmit (e) {
     e.preventDefault()
-    this.action('changeName', {user: this.props.user, name: this.state.nameValue})
+    this.action('changeName', {userID: this.props.userID, name: this.state.nameValue})
     this.setState({nameValue: ''})
-  },
+  }
 
   handleChange (e) {
     this.setState({nameValue: e.target.value})
-  },
+  }
 
-  componentName: 'User',
+  stateFromTree () {
+    return {
+      message: 'message',
+      users: 'users'
+    }
+  }
 
   render () {
     return <li>
-      {this.props.user.get('name')}
-      <form onSubmit={ this.handleSubmit }>
-        <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange}/>
+      {this.state.message}
+      {this.state.users.get(this.props.userID).get('name')}
+      <form onSubmit={ this.handleSubmit.bind(this) }>
+        <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange.bind(this)}/>
       </form>
     </li>
   }
 
-})
+}
