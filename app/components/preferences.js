@@ -1,4 +1,6 @@
-export default class Preferences extends treehouse.Component {
+import React from 'react'
+
+export default class Preferences extends React.Component {
 
   stateFromTree () {
     return {preferences: 'preferences'}

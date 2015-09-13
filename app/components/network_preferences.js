@@ -1,4 +1,6 @@
-export default class NetworkPreferences extends treehouse.Component {
+import React from 'react'
+
+export default class NetworkPreferences extends React.Component {
 
   stateFromTree () {
     return {netPrefs: 'preferences.network'}

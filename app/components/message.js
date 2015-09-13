@@ -1,4 +1,6 @@
-export default class Message extends treehouse.Component {
+import React from 'react'
+
+export default class Message extends React.Component {
   stateFromTree () {
     return {message: 'message'}
   }

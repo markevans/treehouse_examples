@@ -1,4 +1,6 @@
-export default class User extends treehouse.Component {
+import React from 'react'
+
+export default class User extends React.Component {
 
   getInitialState () {
     return {nameValue: ''}
@@ -17,14 +19,14 @@ export default class User extends treehouse.Component {
   stateFromTree () {
     return {
       message: 'message',
-      users: 'users'
+      user: ['users', this.props.userID]
     }
   }
 
   render () {
     return <li>
       {this.state.message}
-      {this.state.users.get(this.props.userID).get('name')}
+      {this.state.user.get('name')}
       <form onSubmit={ this.handleSubmit.bind(this) }>
         <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange.bind(this)}/>
       </form>

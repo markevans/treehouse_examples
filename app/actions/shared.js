@@ -1,7 +1,7 @@
 export default {
 
-  init (state, payload) {
-    state.set({
+  init (tree, payload) {
+    tree.set({
       message: "Change me",
       users: [
         {name: 'Mark'},
@@ -16,12 +16,12 @@ export default {
     }).commit()
   },
 
-  changeMessage (state, {text}) {
-    state.set('message', text).commit()
+  changeMessage (tree, {text}) {
+    tree.set('message', text).commit()
   },
 
-  changeName (state, {userID, name}) {
-    state.at('users', userID).set('name', name).commit()
+  changeName (tree, {userID, name}) {
+    tree.at('users', userID).set('name', name).commit()
   }
 
 }
