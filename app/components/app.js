@@ -1,8 +1,7 @@
 import React from 'react'
 import List from './list'
 import Message from './message'
-import NetworkPreferences from './network_preferences'
-import Preferences from './preferences'
+import Grid from './grid'
 
 export default class App extends React.Component {
   render () {
@@ -10,8 +9,7 @@ export default class App extends React.Component {
       <div>
         <Message/>
         <List/>
-        <NetworkPreferences/>
-        <Preferences/>
+        <Grid/>
       </div>
     )
   }

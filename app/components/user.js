@@ -18,14 +18,12 @@ export default class User extends React.Component {
 
   stateFromTree () {
     return {
-      message: 'message',
       user: ['users', this.props.userID]
     }
   }
 
   render () {
     return <li>
-      {this.state.message}
       {this.state.user.get('name')}
       <form onSubmit={ this.handleSubmit.bind(this) }>
         <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange.bind(this)}/>

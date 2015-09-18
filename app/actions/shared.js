@@ -8,11 +8,11 @@ export default {
         {name: 'Egg'},
         {name: 'Toast'}
       ],
-      preferences: {
-        network: {
-          timestamp: Date()
-        }
-      }
+      grid: [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+      ]
     }).commit()
   },
 
@@ -22,6 +22,10 @@ export default {
 
   changeName (tree, {userID, name}) {
     tree.at('users', userID).set('name', name).commit()
+  },
+
+  drawCell (tree, {rowID, cellID}) {
+    tree.set(['grid', rowID, cellID], 1).commit()
   }
 
 }
