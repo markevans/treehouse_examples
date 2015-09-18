@@ -8,7 +8,7 @@ export default class Grid extends React.Component {
 
   render () {
     return (
-      <table>
+      <table cellSpacing={0}>
         {this.state.grid.map((row, i) => {
           return <Row key={i} rowID={i}/>
         })}

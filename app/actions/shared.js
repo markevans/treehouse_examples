@@ -1,6 +1,8 @@
 export default {
 
   init (tree, payload) {
+    let gridSize = 20
+
     tree.set({
       message: "Change me",
       users: [
@@ -8,11 +10,9 @@ export default {
         {name: 'Egg'},
         {name: 'Toast'}
       ],
-      grid: [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-      ]
+      grid: Array.apply(null, Array(gridSize)).map((row) => {
+        return Array.apply(null, Array(gridSize)).map(cell => 0)
+      })
     }).commit()
   },
 
