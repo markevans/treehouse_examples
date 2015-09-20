@@ -1,29 +1,27 @@
+let range = (size) => {
+  return Array.apply(null, Array(size))
+}
+
 export default {
 
   init (tree, payload) {
     let gridSize = 20
 
-    tree.set('message', "Change me")
-        .set('users', [
-          {name: 'Mark'},
-          {name: 'Egg'},
-          {name: 'Toast'}
-        ])
-
-    if (!tree.get('grid')) {
-      tree.set('grid', Array.apply(null, Array(gridSize)).map((row) => {
-          return Array.apply(null, Array(gridSize)).map(cell => 0)
-        })
-      )
-    }
-    tree.commit()
+    tree.reverseMerge({
+      message: "Change me",
+      users: [
+        {name: 'Mark'},
+        {name: 'Egg'},
+        {name: 'Toast'}
+      ],
+      grid: range(gridSize).map((row) => {
+        return range(gridSize).map(cell => 0)
+      })
+    }).commit()
   },
 
-  initFromUrl (tree, {router}) {
-    let state = router.deserialize()
-    if (state && state.grid) {
-      tree.set('grid', state.grid).commit()
-    }
+  initFromUrl (tree, {stateFromUrl}) {
+    tree.merge(stateFromUrl).commit()
   },
 
   urlChanged (tree, routerState) {

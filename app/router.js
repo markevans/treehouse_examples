@@ -9,6 +9,7 @@ class Router {
     window.addEventListener("hashchange", () => {
       this.action('urlChanged', this.deserialize())
     }, false)
+    this.action('initFromUrl', {stateFromUrl: this.deserialize()})
   }
 
   hash () {
