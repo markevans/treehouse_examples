@@ -1,48 +1,17 @@
-import treehouse from 'treehouse'
+import BaseRouter from './base_router'
 
-class Router {
+export default class Router extends BaseRouter {
 
-  constructor () {
-    treehouse.watch(['grid'], () => {
-      this.syncWithTree()
-    })
-    window.addEventListener("hashchange", () => {
-      this.action('urlChanged', this.deserialize())
-    }, false)
-    this.action('initFromUrl', {stateFromUrl: this.deserialize()})
+  serialize (state) {
+    return JSON.stringify(state)
   }
 
-  hash () {
-    var matches = window.location.href.match(/#(.*)$/)
-    return matches ? window.decodeURI(matches[1]) : ""
+  deserialize (string) {
+    return JSON.parse(string)
   }
 
-  setHash (hash) {
-    window.location.hash = window.encodeURI(hash)
-  }
-
-  serialize () {
-    return JSON.stringify(this.currentTreeState())
-  }
-
-  deserialize () {
-    let string = this.hash()
-    if (string) {
-      return JSON.parse(this.hash())
-    } else {
-      return null
-    }
+  stateFromTree () {
+    return {m: 'message'}
   }
 
 }
-
-treehouse.extend(Router.prototype)
-Router.prototype.syncWithTree = function () {
-  this.setHash(this.serialize())
-}
-Router.prototype.stateFromTree = function () {
-  return {grid: 'grid'}
-}
-
-
-export default Router

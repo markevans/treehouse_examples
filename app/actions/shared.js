@@ -20,12 +20,9 @@ export default {
     }).commit()
   },
 
-  initFromUrl (tree, {stateFromUrl}) {
-    tree.merge(stateFromUrl).commit()
-  },
-
-  urlChanged (tree, routerState) {
-    tree.set('grid', routerState.grid).commit()
+  'router:urlChanged' (tree, {router}) {
+    router.updateTree()
+    tree.commit()
   },
 
   changeMessage (tree, {text}) {

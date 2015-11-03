@@ -8,7 +8,6 @@ global.i = immutable
 treehouse.extendReact(React.Component.prototype)
 treehouse.actions.register(require('./actions/shared'))
 
-let router = new Router()
-
 treehouse.actions.do('init')
+let router = new Router()
 React.render(<App/>, document.body)
