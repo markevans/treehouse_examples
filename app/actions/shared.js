@@ -6,8 +6,7 @@ export default {
 
   init (tree, payload) {
     let gridSize = 20
-
-    tree.reverseMerge({
+    tree.merge({
       message: "Change me",
       users: [
         {name: 'Mark'},
