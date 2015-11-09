@@ -4,17 +4,14 @@ class BaseRouter {
 
   constructor () {
     window.addEventListener("hashchange", () => {
-      if (!this.syncingWithTree) {
-        this.doChangedAction()
-      }
-      this.syncingWithTree = false
+      this.doChangedAction()
     }, false)
     this.doChangedAction()
     this.watchTree()
   }
 
   doChangedAction () {
-    this.action('router:urlChanged', {router: this})
+    this.action('router:urlChanged', {updateTree: this.updateTree.bind(this)})
   }
 
   updateTree () {
@@ -26,7 +23,6 @@ class BaseRouter {
   }
 
   syncWithTree () {
-    this.syncingWithTree = true
     this.setHash(this.serialize(this.currentTreeState()))
   }
 

@@ -7,7 +7,7 @@ export default {
   init (tree, payload) {
     let gridSize = 20
     tree.merge({
-      message: "Change me",
+      message: "",
       users: [
         {name: 'Mark'},
         {name: 'Egg'},
@@ -19,8 +19,8 @@ export default {
     }).commit()
   },
 
-  'router:urlChanged' (tree, {router}) {
-    router.updateTree()
+  'router:urlChanged' (tree, {updateTree}) {
+    updateTree()
     tree.commit()
   },
 
