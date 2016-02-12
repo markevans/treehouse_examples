@@ -4,15 +4,13 @@ class BaseRouter {
 
   constructor (treehouse) {
     this.treehouse = treehouse
-    let pathMap = this.stateFromTree()
-    this.multiCursor = treehouse.tree.pick(pathMap)
+    this.treehouseWatcher = this.treehouse.watch(this.stateFromTree(), (watcher) => {
+      this.setHash(this.serialize(watcher.get()))
+    })
     window.addEventListener("hashchange", () => {
       this.doChangedAction()
     }, false)
     this.doChangedAction()
-    this.treehouseWatcher = this.treehouse.watch(pathMap, (multiCursor) => {
-      this.setHash(this.serialize(multiCursor.get()))
-    })
   }
 
   doChangedAction () {
@@ -20,7 +18,7 @@ class BaseRouter {
   }
 
   updateTree () {
-    this.multiCursor.set(this.state())
+    this.treehouseWatcher.set(this.state())
   }
 
   state () {
