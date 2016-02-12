@@ -11,7 +11,7 @@ export default class Router extends BaseRouter {
   }
 
   stateFromTree () {
-    return {m: 'message'}
+    return {m: ['message']}
   }
 
 }

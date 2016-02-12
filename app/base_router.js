@@ -2,28 +2,25 @@ import treehouse from 'treehouse'
 
 class BaseRouter {
 
-  constructor () {
+  constructor (treehouse) {
+    this.treehouse = treehouse
+    let pathMap = this.stateFromTree()
+    this.multiCursor = treehouse.tree.pick(pathMap)
     window.addEventListener("hashchange", () => {
       this.doChangedAction()
     }, false)
     this.doChangedAction()
-    this.watchTree()
+    this.treehouseWatcher = this.treehouse.watch(pathMap, (multiCursor) => {
+      this.setHash(this.serialize(multiCursor.get()))
+    })
   }
 
   doChangedAction () {
-    this.action('router:urlChanged', {updateTree: this.updateTree.bind(this)})
+    this.treehouse.actions.do('router:urlChanged', {updateTree: this.updateTree.bind(this)})
   }
 
   updateTree () {
-    let key, cursor, state = this.state()
-    for (key in state) {
-      cursor = this.cursors()[key]
-      if (cursor) { cursor.update(state[key]) }
-    }
-  }
-
-  syncWithTree () {
-    this.setHash(this.serialize(this.currentTreeState()))
+    this.multiCursor.set(this.state())
   }
 
   state () {
@@ -49,7 +46,5 @@ class BaseRouter {
   }
 
 }
-
-treehouse.extend(BaseRouter.prototype)
 
 export default BaseRouter

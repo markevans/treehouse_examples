@@ -3,7 +3,7 @@ import User from "./user"
 
 export default class List extends React.Component{
   stateFromTree () {
-    return {users: 'users'}
+    return {users: ['users']}
   }
 
   render () {

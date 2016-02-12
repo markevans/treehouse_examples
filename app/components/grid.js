@@ -3,7 +3,7 @@ import Row from './row'
 
 export default class Grid extends React.Component {
   stateFromTree () {
-    return {grid: 'grid'}
+    return {grid: ['grid']}
   }
 
   render () {

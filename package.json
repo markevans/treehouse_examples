@@ -21,6 +21,6 @@
   "dependencies": {
     "immutable": "^3.7.4",
     "react": "^0.13.3",
-    "treehouse": "^1.0.9"
+    "treehouse": "file:../treehouse"
   }
 }
