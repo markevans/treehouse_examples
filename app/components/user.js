@@ -24,7 +24,7 @@ export default class User extends React.Component {
 
   render () {
     return <li>
-      {this.state.user.get('name')}
+      {this.state.user.name}
       <form onSubmit={ this.handleSubmit.bind(this) }>
         <input name="name" autoComplete="off" value={this.state.nameValue} onChange={this.handleChange.bind(this)}/>
       </form>

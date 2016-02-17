@@ -6,7 +6,7 @@ export default {
 
   init (tree, payload) {
     let gridSize = 20
-    tree.merge({
+    tree.set({
       message: "",
       users: [
         {name: 'Mark'},
@@ -16,24 +16,23 @@ export default {
       grid: range(gridSize).map((row) => {
         return range(gridSize).map(cell => 0)
       })
-    }).commit()
+    })
   },
 
   'router:urlChanged' (tree, {updateTree}) {
     updateTree()
-    tree.commit()
   },
 
   changeMessage (tree, {text}) {
-    tree.set('message', text).commit()
+    tree.at(['message']).set(text)
   },
 
   changeName (tree, {userID, name}) {
-    tree.at('users', userID).set('name', name).commit()
+    tree.at(['users', userID, 'name']).set(name)
   },
 
   drawCell (tree, {rowID, cellID}) {
-    tree.set(['grid', rowID, cellID], 1).commit()
+    tree.at(['grid', rowID, cellID]).set(1)
   }
 
 }
