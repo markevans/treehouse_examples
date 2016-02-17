@@ -1,23 +1,4 @@
-let range = (size) => {
-  return Array.apply(null, Array(size))
-}
-
 export default {
-
-  init (tree, payload) {
-    let gridSize = 20
-    tree.set({
-      message: "",
-      users: [
-        {name: 'Mark'},
-        {name: 'Egg'},
-        {name: 'Toast'}
-      ],
-      grid: range(gridSize).map((row) => {
-        return range(gridSize).map(cell => 0)
-      })
-    })
-  },
 
   'router:urlChanged' (tree, {updateTree}) {
     updateTree()
