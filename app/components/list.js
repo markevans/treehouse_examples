@@ -6,13 +6,20 @@ export default class List extends React.Component{
     return {users: ['users']}
   }
 
+  addUser () {
+    this.action('addUser')
+  }
+
   render () {
     return (
-      <ul>
-        {this.state.users.map( (user, i) => {
-          return <User userID={i} key={i} />
-        })}
-      </ul>
+      <div>
+        <ul>
+          {this.state.users.map( (user, i) => {
+            return <User userID={i} key={i} />
+          })}
+        </ul>
+        <button onClick={this.addUser.bind(this)}>Add one</button>
+      </div>
     )
   }
 }

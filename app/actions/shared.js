@@ -14,6 +14,10 @@ export default {
 
   drawCell (tree, {rowID, cellID}) {
     tree.at(['grid', rowID, cellID]).set(1)
+  },
+
+  addUser (tree) {
+    tree.at(['users']).mutate('push', {name: 'New one'})
   }
 
 }
