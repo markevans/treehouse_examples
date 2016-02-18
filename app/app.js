@@ -5,7 +5,8 @@ import Router from './router'
 global.treehouse = treehouse
 
 treehouse.extendReact(React.Component.prototype)
-treehouse.actions.register(require('./actions/shared'))
+treehouse.registerActions(require('./actions/shared'))
+treehouse.registerMutators(require('./mutators/array'))
 
 let gridSize = 20
 let range = (size) => {
