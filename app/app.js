@@ -5,7 +5,9 @@ import Router from './router'
 global.treehouse = treehouse
 
 treehouse.extendReact(React.Component.prototype)
-treehouse.registerActions(require('./actions/shared'))
+treehouse.registerActions(require('./actions/actions'))
+treehouse.registerFilters(require('./filters/filters'))
+treehouse.registerQueries(require('./queries/queries'))
 treehouse.registerMutators(require('./mutators/array'))
 
 let gridSize = 20

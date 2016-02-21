@@ -16,9 +16,9 @@ export default class User extends React.Component {
     this.setState({nameValue: e.target.value})
   }
 
-  stateFromTree () {
+  treehouseState (t) {
     return {
-      user: ['users', this.props.userID]
+      user: t.at('users', this.props.userID)
     }
   }
 

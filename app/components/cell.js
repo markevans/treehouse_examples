@@ -1,8 +1,8 @@
 import React from 'react'
 
 export default class Cell extends React.Component {
-  stateFromTree () {
-    return {cell: ['grid', this.props.rowID, this.props.cellID]}
+  treehouseState (t) {
+    return {cell: t.at('grid', this.props.rowID, this.props.cellID)}
   }
 
   handleMouseOver () {

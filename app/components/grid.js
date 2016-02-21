@@ -2,8 +2,8 @@ import React from 'react'
 import Row from './row'
 
 export default class Grid extends React.Component {
-  stateFromTree () {
-    return {grid: ['grid']}
+  treehouseState (t) {
+    return {grid: t.at('grid')}
   }
 
   render () {

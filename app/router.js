@@ -10,8 +10,8 @@ export default class Router extends BaseRouter {
     return JSON.parse(string)
   }
 
-  stateFromTree () {
-    return {m: ['message']}
+  treehouseState (t) {
+    return {m: t.at('message')}
   }
 
 }

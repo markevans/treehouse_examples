@@ -5,19 +5,19 @@ export default {
   },
 
   changeMessage (tree, {text}) {
-    tree.at(['message']).set(text)
+    tree.at('message').set(text)
   },
 
   changeName (tree, {userID, name}) {
-    tree.at(['users', userID, 'name']).set(name)
+    tree.at('users', userID, 'name').set(name)
   },
 
   drawCell (tree, {rowID, cellID}) {
-    tree.at(['grid', rowID, cellID]).set(1)
+    tree.at('grid', rowID, cellID).set(1)
   },
 
   addUser (tree) {
-    tree.at(['users']).mutate('push', {name: 'New one'})
+    tree.at('users').mutate('push', {name: 'New one'})
   }
 
 }

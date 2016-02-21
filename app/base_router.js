@@ -4,7 +4,7 @@ class BaseRouter {
 
   constructor (treehouse) {
     this.treehouse = treehouse
-    this.treeView = this.treehouse.pick(this.stateFromTree())
+    this.treeView = this.treehouse.pick(this.treehouseState.bind(this))
     this.treeView.watch((tv) => {
       this.setHash(this.serialize(tv.get()))
     })
