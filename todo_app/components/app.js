@@ -1,16 +1,13 @@
 import React from 'react'
+import AddForm from './add_form'
+import List from './list'
 
 export default class App extends React.Component {
-  treehouseState (t) {
-    return {
-      message: t.at('message')
-    }
-  }
-
   render () {
     return (
-      <div>
-        Hello {this.state.message}
+      <div className="app">
+        <AddForm/>
+        <List/>
       </div>
     )
   }

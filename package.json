@@ -19,7 +19,8 @@
     "webpack-dev-server": "^1.10.1"
   },
   "dependencies": {
-    "react": "^0.13.3",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
     "treehouse": "file:../treehouse"
   }
 }
