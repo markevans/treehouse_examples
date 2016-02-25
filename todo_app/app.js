@@ -122,17 +122,17 @@ treehouse.registerActions({
   //     tree.at('some', 'path').set((oldValue, mutators) => {
   //       return mutators.push(oldValue, 5)
   //     })
-  // Or use the "setWith" convenience method
-  //     tree.at('some', 'path').setWith('push', 5)
+  // Or use the convenience method
+  //     tree.at('some', 'path').push(5)
 
   addTodo (tree, {title}) {
     // Using Math.random is not ideal but this illustrates the concept
     let newTodo = {id: Math.random(), title: title, created: Date.now()}
-    tree.at('items').setWith('setAttribute', newTodo.id, newTodo)
+    tree.at('items').setAttribute(newTodo.id, newTodo)
   },
 
   removeTodo (tree, {id}) {
-    tree.at('items').setWith('delete', id)
+    tree.at('items').delete(id)
   }
 
 })

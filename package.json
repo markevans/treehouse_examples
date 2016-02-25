@@ -21,6 +21,6 @@
   "dependencies": {
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "treehouse": "^2.0.0"
+    "treehouse": "^2.1.0"
   }
 }
