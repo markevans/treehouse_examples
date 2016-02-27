@@ -27,4 +27,7 @@ treehouse.init({
 })
 
 let router = new Router(treehouse)
-React.render(<App/>, document.body)
+
+// Render into DOM
+import ReactDOM from 'react-dom'
+ReactDOM.render(<App/>, document.getElementById('app'))

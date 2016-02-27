@@ -2,7 +2,7 @@ import React from 'react'
 
 export default class Message extends React.Component {
   treehouseState (t) {
-    return {message: t.at('message').filter('upcase')}
+    return {message: t.at('message')}
   }
 
   onChange (e) {

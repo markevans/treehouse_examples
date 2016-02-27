@@ -1,7 +1,7 @@
 export default {
 
-  'router:urlChanged' (tree, {updateTree}) {
-    updateTree()
+  'router:urlChanged' (tree, {router}) {
+    router.push()
   },
 
   changeMessage (tree, {text}) {

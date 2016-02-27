@@ -2,8 +2,9 @@ import React from 'react'
 
 export default class User extends React.Component {
 
-  getInitialState () {
-    return {nameValue: ''}
+  constructor(...args) {
+    super(...args)
+    this.state = {nameValue: ''}
   }
 
   handleSubmit (e) {

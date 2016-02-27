@@ -5,8 +5,8 @@ class BaseRouter {
   constructor (treehouse) {
     this.treehouse = treehouse
     this.treeView = this.treehouse.pick(this.treehouseState.bind(this))
-    this.treeView.watch((tv) => {
-      this.setHash(this.serialize(tv.get()))
+    this.treeView.watch((t) => {
+      this.setHash(this.serialize(t.get()))
     })
     window.addEventListener("hashchange", () => {
       this.doChangedAction()
@@ -15,7 +15,11 @@ class BaseRouter {
   }
 
   doChangedAction () {
-    this.treehouse.actions.do('router:urlChanged', {updateTree: this.treeView.setter(this.state())})
+    this.treehouse.actions.do('router:urlChanged', {router: this})
+  }
+
+  push () {
+    this.treeView.set(this.state())
   }
 
   state () {
