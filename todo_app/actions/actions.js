@@ -1,8 +1,9 @@
+import todoHelpers from '../helpers/todo_helpers'
+
 export default {
 
   addTodo (tree, {title}) {
-    // Using Math.random is not ideal but this illustrates the concept
-    let newTodo = {id: Math.random(), title: title, created: Date.now()}
+    let newTodo = todoHelpers.newTodo(title)
     tree.at('items').setAttribute(newTodo.id, newTodo)
   },
 
